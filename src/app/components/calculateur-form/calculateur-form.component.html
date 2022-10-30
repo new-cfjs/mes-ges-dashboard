@@ -1,0 +1,82 @@
+<mat-toolbar>
+  <img src="../../../assets/logo.jpg" height="50px" />
+  &nbsp;
+  Mes GES
+</mat-toolbar>
+
+<h1>Calculer vos scénarios de GES pour votre transport quotidien</h1>
+
+<div class="page-body" fxLayout="row" fxLayoutAlign="space-around">
+  <form [formGroup]="gesForm">
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field appearance="legacy" floatLabel="always">
+        <mat-label>Adresse de départ</mat-label>
+        <input matInput formControlName="startAddressCtrl" [matAutocomplete]="startAddressAuto">
+        <mat-icon matSuffix>home_pin</mat-icon>
+        <mat-autocomplete #startAddressAuto="matAutocomplete" panelWidth="auto" [displayWith]="addressDisplayFn">
+          <mat-option *ngFor="let result of startAddressResults" [value]="result">
+            {{result.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field appearance="legacy" floatLabel="always">
+        <mat-label>Adresse d'arrivée</mat-label>
+        <input matInput formControlName="endAddressCtrl" [matAutocomplete]="endAddressAuto">
+        <mat-icon matSuffix>location_on</mat-icon>
+        <mat-autocomplete #endAddressAuto="matAutocomplete" panelWidth="auto">
+          <mat-option *ngFor="let result of endAddressResults" [value]="result">
+            {{result.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div fxLayoutAlign="start">
+      <mat-form-field appearance="legacy">
+        <mat-label>Moyen de transport</mat-label>
+        <mat-select>
+          <mat-option>Voiture</mat-option>
+          <mat-option>Etc</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field appearance="legacy">
+        <mat-label>Marque</mat-label>
+        <mat-select>
+          <mat-option>Mazda</mat-option>
+          <mat-option>Etc</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="legacy">
+        <mat-label>Modèle</mat-label>
+        <mat-select>
+          <mat-option>3</mat-option>
+          <mat-option>Etc</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <h3>Exigences de transport en commun</h3>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <mat-form-field appearance="legacy" floatLabel="always">
+          <mat-label>Heure départ</mat-label>
+          <input matInput type="time">
+          <mat-icon matSuffix>schedule</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="legacy" floatLabel="always">
+          <mat-label>Temps maximal (minutes)</mat-label>
+          <input matInput type="number">
+          <mat-icon matSuffix>timer</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="legacy" floatLabel="always">
+          <mat-label>Maximum de transferts</mat-label>
+          <input matInput type="number">
+          <mat-icon matSuffix>directions_bus_outlined</mat-icon>
+<!--          <span class="material-icons-outlined" matSuffix>-->
+<!--            directions_bus_filled-->
+<!--          </span>-->
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
