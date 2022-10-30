@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {GeoCodingService} from '../../services/geo-coding.service';
-import {debounceTime, take} from 'rxjs';
+import {debounceTime, Observable, take} from 'rxjs';
 import {Place} from '../../models/place.model';
+import {CarService} from '../../services/car.service';
 
 @Component({
   selector: 'app-calculateur-form',
@@ -15,15 +16,19 @@ export class CalculateurFormComponent implements OnInit {
   public startAddressResults!: Place[];
   public endAddressResults!: Place[];
   public transportationModes = ['Voiture', 'Covoiturage', 'Transport en commun', 'Vélo', 'Marche'];
+  public carModels$!: Observable<string[]>;
 
   constructor(private fb: FormBuilder,
-              private geoCodingService: GeoCodingService) { }
+              private geoCodingService: GeoCodingService,
+              public carService: CarService) { }
 
   ngOnInit(): void {
     this.gesForm = this.fb.group({
       startAddressCtrl: [''],
       endAddressCtrl: [''],
-      transportationModeCtrl: ['']
+      transportationModeCtrl: [''],
+      carMakeCtrl: [''],
+      carModelCtrl: ['']
     });
 
     this.initAutocomplete();
@@ -57,5 +62,9 @@ export class CalculateurFormComponent implements OnInit {
 
   public addressDisplayFn(address: Place): string {
     return address ? address.name : '';
+  }
+
+  public loadCarModels(): void {
+    this.carModels$ = this.carService.retrieveCarModels(this.gesForm.get('carMakeCtrl')!.value);
   }
 }
