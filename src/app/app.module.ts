@@ -13,14 +13,12 @@ import {MatInputModule} from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {HttpClientModule} from '@angular/common/http';
-import { GeoAutoCompleteComponent } from './components/geo-auto-complete/geo-auto-complete.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalculateurFormComponent,
-    GeoAutoCompleteComponent
+    CalculateurFormComponent
   ],
   imports: [
     BrowserModule,
