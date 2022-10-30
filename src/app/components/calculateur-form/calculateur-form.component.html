@@ -33,27 +33,31 @@
     <div fxLayoutAlign="start">
       <mat-form-field appearance="legacy">
         <mat-label>Moyen de transport</mat-label>
-        <mat-select>
-          <mat-option>Voiture</mat-option>
-          <mat-option>Etc</mat-option>
+        <mat-select formControlName="transportationModeCtrl">
+          <mat-option *ngFor="let mode of transportationModes" [value]="mode">
+            {{mode}}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutGap="20px">
-      <mat-form-field appearance="legacy">
-        <mat-label>Marque</mat-label>
-        <mat-select>
-          <mat-option>Mazda</mat-option>
-          <mat-option>Etc</mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="legacy">
-        <mat-label>Modèle</mat-label>
-        <mat-select>
-          <mat-option>3</mat-option>
-          <mat-option>Etc</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div *ngIf="['Voiture', 'Covoiturage'].indexOf(gesForm.get('transportationModeCtrl')?.value) > -1">
+      <h3>Spécifications de la voiture</h3>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <mat-form-field appearance="legacy">
+          <mat-label>Marque</mat-label>
+          <mat-select>
+            <mat-option>Mazda</mat-option>
+            <mat-option>Etc</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="legacy">
+          <mat-label>Modèle</mat-label>
+          <mat-select>
+            <mat-option>3</mat-option>
+            <mat-option>Etc</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
     <div>
       <h3>Exigences de transport en commun</h3>

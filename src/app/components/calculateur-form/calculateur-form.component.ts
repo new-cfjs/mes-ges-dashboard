@@ -14,6 +14,7 @@ export class CalculateurFormComponent implements OnInit {
   public gesForm!: FormGroup;
   public startAddressResults!: Place[];
   public endAddressResults!: Place[];
+  public transportationModes = ['Voiture', 'Covoiturage', 'Transport en commun', 'Vélo', 'Marche'];
 
   constructor(private fb: FormBuilder,
               private geoCodingService: GeoCodingService) { }
@@ -21,7 +22,8 @@ export class CalculateurFormComponent implements OnInit {
   ngOnInit(): void {
     this.gesForm = this.fb.group({
       startAddressCtrl: [''],
-      endAddressCtrl: ['']
+      endAddressCtrl: [''],
+      transportationModeCtrl: ['']
     });
 
     this.initAutocomplete();
