@@ -1,7 +1,5 @@
 <mat-toolbar>
   <img src="../../../assets/logo.jpg" height="50px" />
-  &nbsp;
-  Mes GES
 </mat-toolbar>
 
 <h1>Calculer vos scénarios de GES pour votre transport quotidien</h1>
@@ -12,7 +10,7 @@
       <mat-form-field appearance="legacy" floatLabel="always">
         <mat-label>Adresse de départ</mat-label>
         <input matInput formControlName="startAddressCtrl" [matAutocomplete]="startAddressAuto">
-        <mat-icon matSuffix>home_pin</mat-icon>
+        <mat-icon matSuffix fontSet="material-icons-outlined">home_pin</mat-icon>
         <mat-autocomplete #startAddressAuto="matAutocomplete" panelWidth="auto" [displayWith]="addressDisplayFn">
           <mat-option *ngFor="let result of startAddressResults" [value]="result">
             {{result.name}}
@@ -22,7 +20,7 @@
       <mat-form-field appearance="legacy" floatLabel="always">
         <mat-label>Adresse d'arrivée</mat-label>
         <input matInput formControlName="endAddressCtrl" [matAutocomplete]="endAddressAuto">
-        <mat-icon matSuffix>location_on</mat-icon>
+        <mat-icon matSuffix fontSet="material-icons-outlined">location_on</mat-icon>
         <mat-autocomplete #endAddressAuto="matAutocomplete" panelWidth="auto">
           <mat-option *ngFor="let result of endAddressResults" [value]="result">
             {{result.name}}
@@ -40,18 +38,25 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div *ngIf="['Voiture', 'Covoiturage'].indexOf(gesForm.get('transportationModeCtrl')?.value) > -1">
+    <div *ngIf="['Voiture', 'Covoiturage'].indexOf(gesForm.get('transportationModeCtrl')?.value) > -1" formGroupName="carFormGroup">
       <h3>Spécifications de la voiture</h3>
       <div fxLayout="row" fxLayoutGap="20px">
+        <!-- TODO S'assurer qu'un type de voiture existe lorsque changer année, make ou model -->
+        <mat-form-field appearance="legacy">
+          <mat-label>Année</mat-label>
+          <mat-select formControlName="yearCtrl">
+            <mat-option *ngFor="let year of carService.retrieveCarYears() | async" [value]="year">{{year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
         <mat-form-field appearance="legacy">
           <mat-label>Marque</mat-label>
-          <mat-select formControlName="carMakeCtrl" (selectionChange)="loadCarModels()">
+          <mat-select formControlName="makeCtrl" (selectionChange)="loadCarModels($event)">
             <mat-option *ngFor="let make of carService.retrieveCarMakes() | async" [value]="make">{{make}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="legacy">
           <mat-label>Modèle</mat-label>
-          <mat-select formControlName="carModelCtrl">
+          <mat-select formControlName="modelCtrl">
             <mat-option *ngFor="let model of carModels$ | async" [value]="model">{{model}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -68,17 +73,17 @@
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>Temps maximal (minutes)</mat-label>
           <input matInput type="number">
-          <mat-icon matSuffix>timer</mat-icon>
+          <mat-icon matSuffix fontSet="material-icons-outlined">timer</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>Maximum de transferts</mat-label>
           <input matInput type="number">
-          <mat-icon matSuffix>directions_bus_outlined</mat-icon>
-<!--          <span class="material-icons-outlined" matSuffix>-->
-<!--            directions_bus_filled-->
-<!--          </span>-->
+          <mat-icon matSuffix fontSet="material-icons-outlined">directions_bus_outlined</mat-icon>
         </mat-form-field>
       </div>
+    </div>
+    <div class="actions" fxLayout="row" fxLayoutAlign="space-around">
+      <button mat-raised-button color="primary">Calculer mes GES</button>
     </div>
   </form>
 </div>

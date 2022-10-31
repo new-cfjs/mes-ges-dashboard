@@ -4,6 +4,7 @@ import {GeoCodingService} from '../../services/geo-coding.service';
 import {debounceTime, Observable, take} from 'rxjs';
 import {Place} from '../../models/place.model';
 import {CarService} from '../../services/car.service';
+import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-calculateur-form',
@@ -27,8 +28,11 @@ export class CalculateurFormComponent implements OnInit {
       startAddressCtrl: [''],
       endAddressCtrl: [''],
       transportationModeCtrl: [''],
-      carMakeCtrl: [''],
-      carModelCtrl: ['']
+      carFormGroup: this.fb.group({
+        yearCtrl: [''],
+        makeCtrl: [''],
+        modelCtrl: ['']
+      })
     });
 
     this.initAutocomplete();
@@ -64,7 +68,7 @@ export class CalculateurFormComponent implements OnInit {
     return address ? address.name : '';
   }
 
-  public loadCarModels(): void {
-    this.carModels$ = this.carService.retrieveCarModels(this.gesForm.get('carMakeCtrl')!.value);
+  public loadCarModels(selectedMake: MatSelectChange): void {
+    this.carModels$ = this.carService.retrieveCarModels(selectedMake.value);
   }
 }

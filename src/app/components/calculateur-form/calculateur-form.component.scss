@@ -1,3 +1,7 @@
+mat-toolbar {
+  background: linear-gradient(41deg, #2396ef 0%, #319cf3 100%);
+}
+
 h1 {
   text-align: center;
   margin-bottom: 50px;
@@ -9,6 +13,10 @@ h1 {
 
     .mat-form-field {
       width: 320px;
+    }
+
+    .actions {
+      margin-top: 30px;
     }
   }
 }
