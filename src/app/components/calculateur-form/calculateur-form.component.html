@@ -67,9 +67,10 @@
       <div fxLayout="row" fxLayoutGap="20px">
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>Heure départ</mat-label>
-          <input matInput type="time">
-          <mat-icon matSuffix>schedule</mat-icon>
+          <input matInput [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
+          <ngx-material-timepicker-toggle [for]="toggleTimepicker" matSuffix></ngx-material-timepicker-toggle>
         </mat-form-field>
+        <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>Temps maximal (minutes)</mat-label>
           <input matInput type="number">
