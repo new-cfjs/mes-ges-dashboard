@@ -16,11 +16,13 @@ import {HttpClientModule} from '@angular/common/http';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonModule} from '@angular/material/button';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { ResultatsGESComponent } from './components/resultats-ges/resultats-ges.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalculateurFormComponent
+    CalculateurFormComponent,
+    ResultatsGESComponent
   ],
   imports: [
     BrowserModule,

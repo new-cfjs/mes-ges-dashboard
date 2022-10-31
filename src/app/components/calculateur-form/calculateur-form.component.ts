@@ -5,6 +5,8 @@ import {debounceTime, Observable, take} from 'rxjs';
 import {Place} from '../../models/place.model';
 import {CarService} from '../../services/car.service';
 import {MatSelectChange} from '@angular/material/select';
+import {GesCalculatorService} from '../../services/ges-calculator.service';
+import {GesCalculatorQuery} from '../../models/ges-calculator-query.model';
 
 @Component({
   selector: 'app-calculateur-form',
@@ -21,7 +23,8 @@ export class CalculateurFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private geoCodingService: GeoCodingService,
-              public carService: CarService) { }
+              public carService: CarService,
+              private gesCalculatorService: GesCalculatorService) { }
 
   ngOnInit(): void {
     this.gesForm = this.fb.group({
@@ -32,6 +35,11 @@ export class CalculateurFormComponent implements OnInit {
         yearCtrl: [''],
         makeCtrl: [''],
         modelCtrl: ['']
+      }),
+      publicTransitGroup: this.fb.group({
+        departTimeCtrl: [''],
+        maximumTimeCtrl: [''],
+        maximumTransfersCtrl: ['']
       })
     });
 
@@ -70,5 +78,21 @@ export class CalculateurFormComponent implements OnInit {
 
   public loadCarModels(selectedMake: MatSelectChange): void {
     this.carModels$ = this.carService.retrieveCarModels(selectedMake.value);
+  }
+
+  public calculateGES(): void {
+    const request = {
+      startAddress: this.gesForm.get('startAddressCtrl')!.value,
+      endAddress: this.gesForm.get('endAddressCtrl')!.value,
+      transportationMode: this.gesForm.get('transportationModeCtrl')!.value,
+      carYear: this.gesForm.get('carFormGroup.yearCtrl')!.value,
+      carMake: this.gesForm.get('carFormGroup.makeCtrl')!.value,
+      carModel: this.gesForm.get('carFormGroup.modelCtrl')!.value,
+      publicTransitDepartTime: this.gesForm.get('publicTransitGroup.departTimeCtrl')!.value,
+      publicTransitMaximumTime: this.gesForm.get('publicTransitGroup.maximumTimeCtrl')!.value,
+      publicTransitMaximumTransfers: this.gesForm.get('publicTransitGroup.maximumTransfersCtrl')!.value
+    } as GesCalculatorQuery;
+
+    this.gesCalculatorService.calculateGES(request);
   }
 }

@@ -4,7 +4,7 @@
 
 <h1>Calculer vos scénarios de GES pour votre transport quotidien</h1>
 
-<div class="page-body" fxLayout="row" fxLayoutAlign="space-around">
+<div class="page-body" fxLayout="row" fxLayoutAlign="space-around" (submit)="calculateGES()">
   <form [formGroup]="gesForm">
     <div fxLayout="row" fxLayoutGap="20px">
       <mat-form-field appearance="legacy" floatLabel="always">
@@ -62,29 +62,31 @@
         </mat-form-field>
       </div>
     </div>
-    <div>
+    <div formGroupName="publicTransitGroup">
       <h3>Exigences de transport en commun</h3>
       <div fxLayout="row" fxLayoutGap="20px">
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>Heure départ</mat-label>
-          <input matInput [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
+          <input matInput [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly formControlName="departTimeCtrl">
           <ngx-material-timepicker-toggle [for]="toggleTimepicker" matSuffix></ngx-material-timepicker-toggle>
         </mat-form-field>
         <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>Temps maximal (minutes)</mat-label>
-          <input matInput type="number">
+          <input matInput type="number" formControlName="maximumTimeCtrl">
           <mat-icon matSuffix fontSet="material-icons-outlined">timer</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>Maximum de transferts</mat-label>
-          <input matInput type="number">
+          <input matInput type="number" formControlName="maximumTransfersCtrl">
           <mat-icon matSuffix fontSet="material-icons-outlined">directions_bus_outlined</mat-icon>
         </mat-form-field>
       </div>
     </div>
     <div class="actions" fxLayout="row" fxLayoutAlign="space-around">
-      <button mat-raised-button color="primary">Calculer mes GES</button>
+      <button mat-raised-button color="primary" type="submit">Calculer mes GES</button>
     </div>
   </form>
+
+  <!-- TODO Nombre journées télétravail ?? -->
 </div>
