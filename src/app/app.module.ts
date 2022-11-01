@@ -17,6 +17,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonModule} from '@angular/material/button';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ResultatsGESComponent } from './components/resultats-ges/resultats-ges.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { ResultatsGESComponent } from './components/resultats-ges/resultats-ges.
     HttpClientModule,
     MatAutocompleteModule,
     MatButtonModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    MatCardModule,
+    MatDividerModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

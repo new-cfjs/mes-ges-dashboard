@@ -11,7 +11,7 @@ export class GesCalculatorService {
 
   calculateGES(request: GesCalculatorQuery): Observable<boolean> {
     // TODO
-    console.log(request);
+    // console.log(request);
 
     return of(true);
   }
