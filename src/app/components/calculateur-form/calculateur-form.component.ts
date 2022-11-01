@@ -17,8 +17,8 @@ import {Router} from '@angular/router';
 export class CalculateurFormComponent implements OnInit {
 
   public gesForm!: FormGroup;
-  public startAddressResults!: Place[];
-  public endAddressResults!: Place[];
+  public originAddressResults!: Place[];
+  public destinationAddressResults!: Place[];
   public transportationModes = ['Voiture', 'Covoiturage', 'Transport en commun', 'Vélo', 'Marche'];
   public carModels$!: Observable<string[]>;
 
@@ -30,8 +30,8 @@ export class CalculateurFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.gesForm = this.fb.group({
-      startAddressCtrl: [''],
-      endAddressCtrl: [''],
+      originAddressCtrl: [''],
+      destinationAddressCtrl: [''],
       transportationModeCtrl: [''],
       carFormGroup: this.fb.group({
         yearCtrl: [''],
@@ -49,27 +49,27 @@ export class CalculateurFormComponent implements OnInit {
   }
 
   private initAutocomplete() {
-    this.gesForm.get('startAddressCtrl')?.valueChanges.pipe(
+    this.gesForm.get('originAddressCtrl')?.valueChanges.pipe(
       debounceTime(500)
     ).subscribe(address => {
       if (address.length > 3) {
         this.geoCodingService.geoCode(address).pipe(take(1)).subscribe(results => {
-          this.startAddressResults = results;
+          this.originAddressResults = results;
         });
       } else {
-        this.startAddressResults = [];
+        this.originAddressResults = [];
       }
     });
 
-    this.gesForm.get('endAddressCtrl')?.valueChanges.pipe(
+    this.gesForm.get('destinationAddressCtrl')?.valueChanges.pipe(
       debounceTime(500)
     ).subscribe(address => {
       if (address.length > 3) {
         this.geoCodingService.geoCode(address).pipe(take(1)).subscribe(results => {
-          this.endAddressResults = results;
+          this.destinationAddressResults = results;
         });
       } else {
-        this.endAddressResults = [];
+        this.destinationAddressResults = [];
       }
     });
   }
@@ -84,8 +84,8 @@ export class CalculateurFormComponent implements OnInit {
 
   public calculateGES(): void {
     const request = {
-      startAddress: this.gesForm.get('startAddressCtrl')!.value,
-      endAddress: this.gesForm.get('endAddressCtrl')!.value,
+      originAddress: JSON.stringify(this.gesForm.get('originAddressCtrl')!.value),
+      destinationAddress: JSON.stringify(this.gesForm.get('destinationAddressCtrl')!.value),
       transportationMode: this.gesForm.get('transportationModeCtrl')!.value,
       carYear: this.gesForm.get('carFormGroup.yearCtrl')!.value,
       carMake: this.gesForm.get('carFormGroup.makeCtrl')!.value,

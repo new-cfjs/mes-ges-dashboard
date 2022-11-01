@@ -5,20 +5,20 @@
     <div fxLayout="row" fxLayoutGap="20px">
       <mat-form-field appearance="legacy" floatLabel="always">
         <mat-label>Adresse de départ</mat-label>
-        <input matInput formControlName="startAddressCtrl" [matAutocomplete]="startAddressAuto">
+        <input matInput formControlName="originAddressCtrl" [matAutocomplete]="originAddressAuto">
         <mat-icon matSuffix fontSet="material-icons-outlined">home_pin</mat-icon>
-        <mat-autocomplete #startAddressAuto="matAutocomplete" panelWidth="auto" [displayWith]="addressDisplayFn">
-          <mat-option *ngFor="let result of startAddressResults" [value]="result">
+        <mat-autocomplete #originAddressAuto="matAutocomplete" panelWidth="auto" [displayWith]="addressDisplayFn">
+          <mat-option *ngFor="let result of originAddressResults" [value]="result">
             {{result.name}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
       <mat-form-field appearance="legacy" floatLabel="always">
         <mat-label>Adresse d'arrivée</mat-label>
-        <input matInput formControlName="endAddressCtrl" [matAutocomplete]="endAddressAuto">
+        <input matInput formControlName="destinationAddressCtrl" [matAutocomplete]="destinationAddressAuto">
         <mat-icon matSuffix fontSet="material-icons-outlined">location_on</mat-icon>
-        <mat-autocomplete #endAddressAuto="matAutocomplete" panelWidth="auto">
-          <mat-option *ngFor="let result of endAddressResults" [value]="result">
+        <mat-autocomplete #destinationAddressAuto="matAutocomplete" panelWidth="auto">
+          <mat-option *ngFor="let result of destinationAddressResults" [value]="result">
             {{result.name}}
           </mat-option>
         </mat-autocomplete>

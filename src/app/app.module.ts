@@ -20,6 +20,7 @@ import { ResultatsGESComponent } from './components/resultats-ges/resultats-ges.
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
+import {GoogleMapsModule} from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {MatListModule} from '@angular/material/list';
     NgxMaterialTimepickerModule,
     MatCardModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    GoogleMapsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

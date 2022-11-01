@@ -1,13 +1,10 @@
-import {Place} from './place.model';
-
 export interface GesCalculatorQuery {
-  startAddress: Place;
-  endAddress: Place;
+  originAddress: string;
+  destinationAddress: string;
   transportationMode: string;
   carYear: number;
   carMake: string;
   carModel: string;
-  // TODO moment ?
   publicTransitDepartTime: string;
   publicTransitMaximumTime: string;
   publicTransitMaximumTransfers: string;
