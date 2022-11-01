@@ -1,11 +1,7 @@
-<mat-toolbar>
-  <img src="../../../assets/logo.jpg" height="50px" />
-</mat-toolbar>
-
 <h1>Calculer vos scénarios de GES pour votre transport quotidien</h1>
 
-<div class="page-body" fxLayout="row" fxLayoutAlign="space-around" (submit)="calculateGES()">
-  <form [formGroup]="gesForm">
+<div class="page-body" fxLayout="row" fxLayoutAlign="space-around">
+  <form [formGroup]="gesForm" (submit)="calculateGES()">
     <div fxLayout="row" fxLayoutGap="20px">
       <mat-form-field appearance="legacy" floatLabel="always">
         <mat-label>Adresse de départ</mat-label>

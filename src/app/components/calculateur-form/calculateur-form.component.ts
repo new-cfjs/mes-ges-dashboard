@@ -7,6 +7,7 @@ import {CarService} from '../../services/car.service';
 import {MatSelectChange} from '@angular/material/select';
 import {GesCalculatorService} from '../../services/ges-calculator.service';
 import {GesCalculatorQuery} from '../../models/ges-calculator-query.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-calculateur-form',
@@ -24,7 +25,8 @@ export class CalculateurFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private geoCodingService: GeoCodingService,
               public carService: CarService,
-              private gesCalculatorService: GesCalculatorService) { }
+              private gesCalculatorService: GesCalculatorService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.gesForm = this.fb.group({
@@ -93,6 +95,8 @@ export class CalculateurFormComponent implements OnInit {
       publicTransitMaximumTransfers: this.gesForm.get('publicTransitGroup.maximumTransfersCtrl')!.value
     } as GesCalculatorQuery;
 
-    this.gesCalculatorService.calculateGES(request);
+    this.gesCalculatorService.calculateGES(request).subscribe(_ => {
+      this.router.navigate(['/results'], { queryParams: {...request} });
+    });
   }
 }
