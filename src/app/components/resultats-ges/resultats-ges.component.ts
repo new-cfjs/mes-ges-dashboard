@@ -18,8 +18,10 @@ export class ResultatsGESComponent implements OnInit {
   private readonly NUMBER_HOLIDAYS = 10;
   public readonly NUMBER_WORKING_DAYS = 52 * 5 - this.NUMBER_STAT_HOLIDAYS - this.NUMBER_HOLIDAYS;
   private readonly TWICE_PER_DAY = 2;
-  // https://www.carbonindependent.org/20.html#:~:text=The%20typical%20bus%20produces%20about,kg%20CO2%20per%20km%20travelled%3F
-  private readonly BUS_AVERAGE_CO2_GRAMS_PER_KM = 60;
+  // https://www.bikeradar.com/features/long-reads/cycling-environmental-impact/
+  private readonly BUS_AVERAGE_CO2_GRAMS_PER_KM = 101;
+  // https://www.bikeradar.com/features/long-reads/cycling-environmental-impact/
+  private readonly BIKE_AVERAGE_CO2_GRAMS_PER_KM = 21;
 
   private gesCalculatorQuery!: GesCalculatorQuery;
   public scenarios: Scenario[] = [];
@@ -67,7 +69,7 @@ export class ResultatsGESComponent implements OnInit {
         gesInGrams = Math.round(scenario.route.distanceInMeters / 1000 * this.BUS_AVERAGE_CO2_GRAMS_PER_KM * 100) / 100;
         break;
       case 'Vélo':
-        gesInGrams = 0;
+        gesInGrams = Math.round(scenario.route.distanceInMeters / 1000 * this.BIKE_AVERAGE_CO2_GRAMS_PER_KM * 100) / 100;
         break;
       case 'Marche':
         gesInGrams = 0;

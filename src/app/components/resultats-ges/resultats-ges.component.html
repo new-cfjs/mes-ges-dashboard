@@ -1,3 +1,5 @@
+<!-- TODO Afficher origin et destination -->
+
 <h1>Scénarios</h1>
 
 <div fxLayout="row wrap" fxLayoutAlign="space-evenly">
@@ -23,6 +25,7 @@
         <mat-list-item>
           <mat-icon matSuffix fontSet="material-icons-outlined">co2</mat-icon>
           <em>CO<sub>2</sub>:</em> {{calculateGESInGrams(scenario) | number }} g
+          <!-- TODO Convert to kg -->
         </mat-list-item>
       </mat-list>
       <mat-divider></mat-divider>
