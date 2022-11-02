@@ -9,3 +9,5 @@ RUN ng build
 
 FROM nginx as runtime
 COPY --from=build /app/dist/mes-ges/ /usr/share/nginx/html
+COPY ./nginx/default.conf /etc/nginx/conf.d/
+#CMD ["ng", "serve", "--port", "80", "--host", "0.0.0.0"]
