@@ -1,6 +1,6 @@
 <h1>Scénarios</h1>
 
-<div fxLayout="row" fxLayoutAlign="space-evenly" fxLayoutGap="30px">
+<div fxLayout="row wrap" fxLayoutAlign="space-evenly">
   <mat-card fxFlex="40" *ngFor="let scenario of scenarios">
     <mat-card-header>
       <div mat-card-avatar>
@@ -22,7 +22,7 @@
         </mat-list-item>
         <mat-list-item>
           <mat-icon matSuffix fontSet="material-icons-outlined">co2</mat-icon>
-          <em>CO<sub>2</sub>:</em> {{calculateGESInGrams(scenario.route) | number }} g
+          <em>CO<sub>2</sub>:</em> {{calculateGESInGrams(scenario) | number }} g
         </mat-list-item>
       </mat-list>
       <mat-divider></mat-divider>
@@ -39,7 +39,7 @@
         <mat-list-item>
           <mat-icon matSuffix fontSet="material-icons-outlined">co2</mat-icon>
           <!-- TODO Convert to kg ? -->
-          <em>CO<sub>2</sub>:</em> {{annualize(calculateGESInGrams(scenario.route)) | number }} g
+          <em>CO<sub>2</sub>:</em> {{annualize(calculateGESInGrams(scenario)) | number }} g
         </mat-list-item>
       </mat-list>
     </mat-card-content>

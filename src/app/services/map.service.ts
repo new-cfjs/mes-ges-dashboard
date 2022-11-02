@@ -13,7 +13,7 @@ export class MapService {
     const request: google.maps.DirectionsRequest = {
       destination: {lat: +destination.lat, lng: +destination.lon},
       origin: {lat: +origin.lat, lng: +origin.lon},
-      travelMode: google.maps.TravelMode.DRIVING
+      travelMode: travelMode
     };
 
     return this.mapDirectionsService.route(request).pipe(
