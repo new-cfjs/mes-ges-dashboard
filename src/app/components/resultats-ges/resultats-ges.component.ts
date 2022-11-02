@@ -64,6 +64,6 @@ export class ResultatsGESComponent implements OnInit {
   public calculateGESInGrams(route: MapRoute): number {
     const carModel: CarModel = JSON.parse(this.gesCalculatorQuery.carModel);
 
-    return route.distanceInMeters / 1000 * carModel.co2GramsPerKm;
+    return Math.round(route.distanceInMeters / 1000 * carModel.co2GramsPerKm * 100) / 100;
   }
 }
