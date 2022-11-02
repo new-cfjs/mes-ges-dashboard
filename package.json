@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --verbose",
+    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -22,6 +22,8 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "moment": "^2.29.4",
+    "moment-duration-format": "^2.3.2",
     "ngx-material-timepicker": "^5.5.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
@@ -32,6 +34,7 @@
     "@angular/cli": "~14.2.7",
     "@angular/compiler-cli": "^14.2.0",
     "@types/jasmine": "~4.0.0",
+    "@types/moment-duration-format": "^2.2.3",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",

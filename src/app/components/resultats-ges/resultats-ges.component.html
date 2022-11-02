@@ -22,7 +22,7 @@
         </mat-list-item>
         <mat-list-item>
           <mat-icon matSuffix fontSet="material-icons-outlined">co2</mat-icon>
-          <em>CO<sub>2</sub>:</em> {{calculateGESInGrams(scenario.route)}} g
+          <em>CO<sub>2</sub>:</em> {{calculateGESInGrams(scenario.route) | number }} g
         </mat-list-item>
       </mat-list>
       <mat-divider></mat-divider>
@@ -30,15 +30,16 @@
       <mat-list>
         <mat-list-item>
           <mat-icon matSuffix fontSet="material-icons-outlined">timer</mat-icon>
-          <em>Temps transport:</em> {{scenario.route.durationInSeconds * NUMBER_WORKING_DAYS_IN_CANADA }}
+          <em>Temps transport:</em> {{annualize(scenario.route.durationInSeconds) | durationFormat }}
         </mat-list-item>
         <mat-list-item>
           <mat-icon matSuffix fontSet="material-icons-outlined">route</mat-icon>
-          <em>Distance parcourue:</em> {{scenario.route.distanceInMeters * NUMBER_WORKING_DAYS_IN_CANADA }}
+          <em>Distance parcourue:</em> {{annualize(scenario.route.distanceInMeters) | distanceFormat | number }} km
         </mat-list-item>
         <mat-list-item>
           <mat-icon matSuffix fontSet="material-icons-outlined">co2</mat-icon>
-          <em>CO<sub>2</sub>:</em> {{calculateGESInGrams(scenario.route) * NUMBER_WORKING_DAYS_IN_CANADA}} g
+          <!-- TODO Convert to kg ? -->
+          <em>CO<sub>2</sub>:</em> {{annualize(calculateGESInGrams(scenario.route)) | number }} g
         </mat-list-item>
       </mat-list>
     </mat-card-content>

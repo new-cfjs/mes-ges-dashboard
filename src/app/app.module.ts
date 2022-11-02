@@ -21,12 +21,16 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {GoogleMapsModule} from '@angular/google-maps';
+import { DurationFormatPipe } from './pipes/duration-format.pipe';
+import { DistanceFormatPipe } from './pipes/distance-format.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalculateurFormComponent,
-    ResultatsGESComponent
+    ResultatsGESComponent,
+    DurationFormatPipe,
+    DistanceFormatPipe
   ],
   imports: [
     BrowserModule,

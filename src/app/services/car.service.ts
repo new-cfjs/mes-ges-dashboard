@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of, take} from 'rxjs';
+import {map, Observable, of, take} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {CarModel} from '../models/car-model.model';
 
@@ -12,11 +12,11 @@ export class CarService {
   constructor(private httpClient: HttpClient) { }
 
   public retrieveCarMakes(): Observable<string[]> {
-    return this.httpClient.get<string[]>(`${this.SERVER_URL}/make`).pipe(take(1));
+    return this.httpClient.get<string[]>(`${this.SERVER_URL}/make`).pipe(take(1), map(makes => makes.sort()));
   }
 
   public retrieveCarModels(year: string, make: string): Observable<CarModel[]> {
-    return this.httpClient.get<CarModel[]>(`${this.SERVER_URL}/model?year=${year}&make=${make}`).pipe(take(1));
+    return this.httpClient.get<CarModel[]>(`${this.SERVER_URL}/model?year=${year}&make=${make}`).pipe(take(1), map(makes => makes.sort()));
   }
 
   public retrieveCarYears(): Observable<number[]> {
