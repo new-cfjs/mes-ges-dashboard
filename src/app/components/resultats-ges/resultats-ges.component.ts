@@ -14,8 +14,10 @@ import {CarModel} from '../../models/car-model.model';
   styleUrls: ['./resultats-ges.component.scss']
 })
 export class ResultatsGESComponent implements OnInit {
-  // 11 jours fériés
-  public readonly NUMBER_WORKING_DAYS_IN_CANADA = 249;
+  private readonly NUMBER_STAT_HOLIDAYS = 11;
+  private readonly NUMBER_HOLIDAYS = 10;
+  public readonly NUMBER_WORKING_DAYS = 52 * 5 - this.NUMBER_STAT_HOLIDAYS - this.NUMBER_HOLIDAYS;
+  private readonly TWICE_PER_DAY = 2;
 
   private gesCalculatorQuery!: GesCalculatorQuery;
   public scenarios: Scenario[] = [];
@@ -65,5 +67,9 @@ export class ResultatsGESComponent implements OnInit {
     const carModel: CarModel = JSON.parse(this.gesCalculatorQuery.carModel);
 
     return Math.round(route.distanceInMeters / 1000 * carModel.co2GramsPerKm * 100) / 100;
+  }
+
+  public annualize(routeValue: number): number {
+    return routeValue * this.TWICE_PER_DAY * this.NUMBER_WORKING_DAYS;
   }
 }
