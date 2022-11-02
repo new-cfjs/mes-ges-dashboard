@@ -8,6 +8,7 @@ import {MatSelectChange} from '@angular/material/select';
 import {GesCalculatorService} from '../../services/ges-calculator.service';
 import {GesCalculatorQuery} from '../../models/ges-calculator-query.model';
 import {Router} from '@angular/router';
+import {CarModel} from '../../models/car-model.model';
 
 @Component({
   selector: 'app-calculateur-form',
@@ -20,7 +21,8 @@ export class CalculateurFormComponent implements OnInit {
   public originAddressResults!: Place[];
   public destinationAddressResults!: Place[];
   public transportationModes = ['Voiture', 'Covoiturage', 'Transport en commun', 'Vélo', 'Marche'];
-  public carModels$!: Observable<string[]>;
+  public carMakes$!: Observable<string[]>;
+  public carModels$!: Observable<CarModel[]>;
 
   constructor(private fb: FormBuilder,
               private geoCodingService: GeoCodingService,
@@ -46,6 +48,7 @@ export class CalculateurFormComponent implements OnInit {
     });
 
     this.initAutocomplete();
+    this.initCarMakes();
   }
 
   private initAutocomplete() {
@@ -78,8 +81,8 @@ export class CalculateurFormComponent implements OnInit {
     return address ? address.name : '';
   }
 
-  public loadCarModels(selectedMake: MatSelectChange): void {
-    this.carModels$ = this.carService.retrieveCarModels(selectedMake.value);
+  public loadCarModels(): void {
+    this.carModels$ = this.carService.retrieveCarModels(this.gesForm.get('carFormGroup.yearCtrl')!.value, this.gesForm.get('carFormGroup.makeCtrl')!.value);
   }
 
   public calculateGES(): void {
@@ -87,9 +90,7 @@ export class CalculateurFormComponent implements OnInit {
       originAddress: JSON.stringify(this.gesForm.get('originAddressCtrl')!.value),
       destinationAddress: JSON.stringify(this.gesForm.get('destinationAddressCtrl')!.value),
       transportationMode: this.gesForm.get('transportationModeCtrl')!.value,
-      carYear: this.gesForm.get('carFormGroup.yearCtrl')!.value,
-      carMake: this.gesForm.get('carFormGroup.makeCtrl')!.value,
-      carModel: this.gesForm.get('carFormGroup.modelCtrl')!.value,
+      carModel: JSON.stringify(this.gesForm.get('carFormGroup.modelCtrl')!.value),
       publicTransitDepartTime: this.gesForm.get('publicTransitGroup.departTimeCtrl')!.value,
       publicTransitMaximumTime: this.gesForm.get('publicTransitGroup.maximumTimeCtrl')!.value,
       publicTransitMaximumTransfers: this.gesForm.get('publicTransitGroup.maximumTransfersCtrl')!.value
@@ -98,5 +99,9 @@ export class CalculateurFormComponent implements OnInit {
     this.gesCalculatorService.calculateGES(request).subscribe(_ => {
       this.router.navigate(['/results'], { queryParams: {...request} });
     });
+  }
+
+  private initCarMakes() {
+    this.carMakes$ = this.carService.retrieveCarMakes();
   }
 }

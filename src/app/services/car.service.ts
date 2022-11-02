@@ -1,19 +1,22 @@
-import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable, of, take} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {CarModel} from '../models/car-model.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarService {
+  private readonly SERVER_URL = 'api';
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   public retrieveCarMakes(): Observable<string[]> {
-    return of(['Mazda', 'Honda', 'Toyota']);
+    return this.httpClient.get<string[]>(`${this.SERVER_URL}/make`).pipe(take(1));
   }
 
-  public retrieveCarModels(make: string): Observable<string[]> {
-    return make ? of(['Celica', 'Camry', 'Corolla']) : of([]);
+  public retrieveCarModels(year: string, make: string): Observable<CarModel[]> {
+    return this.httpClient.get<CarModel[]>(`${this.SERVER_URL}/model?year=${year}&make=${make}`).pipe(take(1));
   }
 
   public retrieveCarYears(): Observable<number[]> {

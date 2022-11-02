@@ -46,14 +46,14 @@
         </mat-form-field>
         <mat-form-field appearance="legacy">
           <mat-label>Marque</mat-label>
-          <mat-select formControlName="makeCtrl" (selectionChange)="loadCarModels($event)">
-            <mat-option *ngFor="let make of carService.retrieveCarMakes() | async" [value]="make">{{make}}</mat-option>
+          <mat-select formControlName="makeCtrl" (selectionChange)="loadCarModels()">
+            <mat-option *ngFor="let make of carMakes$ | async" [value]="make">{{make}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field appearance="legacy">
           <mat-label>Modèle</mat-label>
           <mat-select formControlName="modelCtrl">
-            <mat-option *ngFor="let model of carModels$ | async" [value]="model">{{model}}</mat-option>
+            <mat-option *ngFor="let model of carModels$ | async" [value]="model">{{model.model}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>

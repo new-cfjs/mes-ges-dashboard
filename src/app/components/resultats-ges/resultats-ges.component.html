@@ -22,7 +22,7 @@
         </mat-list-item>
         <mat-list-item>
           <mat-icon matSuffix fontSet="material-icons-outlined">co2</mat-icon>
-          <em>CO<sub>2</sub>:</em> 278 g
+          <em>CO<sub>2</sub>:</em> {{calculateGESInGrams(scenario.route)}} g
         </mat-list-item>
       </mat-list>
       <mat-divider></mat-divider>
@@ -30,15 +30,15 @@
       <mat-list>
         <mat-list-item>
           <mat-icon matSuffix fontSet="material-icons-outlined">timer</mat-icon>
-          <em>Temps transport:</em> 43 min
+          <em>Temps transport:</em> {{scenario.route.durationInSeconds * NUMBER_WORKING_DAYS_IN_CANADA }}
         </mat-list-item>
         <mat-list-item>
           <mat-icon matSuffix fontSet="material-icons-outlined">route</mat-icon>
-          <em>Distance parcourue:</em> 7.8 km
+          <em>Distance parcourue:</em> {{scenario.route.distanceInMeters * NUMBER_WORKING_DAYS_IN_CANADA }}
         </mat-list-item>
         <mat-list-item>
           <mat-icon matSuffix fontSet="material-icons-outlined">co2</mat-icon>
-          <em>CO<sub>2</sub>:</em> 278 g
+          <em>CO<sub>2</sub>:</em> {{calculateGESInGrams(scenario.route) * NUMBER_WORKING_DAYS_IN_CANADA}} g
         </mat-list-item>
       </mat-list>
     </mat-card-content>

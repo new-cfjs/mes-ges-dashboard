@@ -6,6 +6,7 @@ import {map, take, tap} from 'rxjs';
 import TravelMode = google.maps.TravelMode;
 import {MapRoute} from '../../models/map-route.model';
 import {Scenario} from '../../models/scenario.model';
+import {CarModel} from '../../models/car-model.model';
 
 @Component({
   selector: 'app-resultats-ges',
@@ -13,6 +14,9 @@ import {Scenario} from '../../models/scenario.model';
   styleUrls: ['./resultats-ges.component.scss']
 })
 export class ResultatsGESComponent implements OnInit {
+  // 11 jours fériés
+  public readonly NUMBER_WORKING_DAYS_IN_CANADA = 249;
+
   private gesCalculatorQuery!: GesCalculatorQuery;
   public scenarios: Scenario[] = [];
 
@@ -51,9 +55,15 @@ export class ResultatsGESComponent implements OnInit {
       // TODO
       travelMode: TravelMode.DRIVING,
       distanceText: firstRoute.distance!.text,
-      distanceValueInMeters: firstRoute.distance!.value,
+      distanceInMeters: firstRoute.distance!.value,
       durationText: firstRoute.duration!.text,
       durationInSeconds: firstRoute.duration!.value
     } as MapRoute;
+  }
+
+  public calculateGESInGrams(route: MapRoute): number {
+    const carModel: CarModel = JSON.parse(this.gesCalculatorQuery.carModel);
+
+    return route.distanceInMeters / 1000 * carModel.co2GramsPerKm;
   }
 }
