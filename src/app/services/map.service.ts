@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {MapDirectionsService} from '@angular/google-maps';
-import {map, Observable} from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
 import {DirectionsRequest} from '../models/directions-request.model';
 
 @Injectable({
@@ -22,7 +22,12 @@ export class MapService {
     }
 
     return this.mapDirectionsService.route(mapDirectionRequest).pipe(
-      map(response => response.result!)
+      map(response => response.result!),
+      tap(result => {
+        if (!result.routes.length) {
+          console.log(`Directions from ${request.travelMode} are empty`);
+        }
+      })
     );
   }
 }

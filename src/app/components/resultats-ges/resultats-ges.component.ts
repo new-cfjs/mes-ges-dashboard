@@ -166,14 +166,14 @@ export class ResultatsGESComponent implements OnInit {
   }
 
   private mapToMapRoute(result: google.maps.DirectionsResult): MapRoute {
-    const firstRoute = result.routes[0]!.legs[0]!;
+    const firstRoute = result.routes[0]?.legs[0];
     return {
       // TODO
       travelMode: TravelMode.DRIVING,
-      distanceText: firstRoute.distance!.text,
-      distanceInMeters: firstRoute.distance!.value,
-      durationText: firstRoute.duration!.text,
-      durationInSeconds: firstRoute.duration!.value
+      distanceText: firstRoute ? firstRoute.distance!.text : 'N/A',
+      distanceInMeters: firstRoute ? firstRoute.distance!.value : 0,
+      durationText: firstRoute ? firstRoute.duration!.text : 'N/A',
+      durationInSeconds: firstRoute ? firstRoute.duration!.value : 0
     } as MapRoute;
   }
 }

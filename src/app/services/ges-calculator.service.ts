@@ -31,10 +31,15 @@ export class GesCalculatorService {
         travelMode: TravelMode.DRIVING
       }).pipe(
         tap(result => {
-          const firstRoute = result.routes[0]!.legs[0]!;
+          if (result.routes.length) {
+            const firstRoute = result.routes[0]!.legs[0]!;
 
-          trip.tempsAuto = firstRoute.duration!.value;
-          trip.distanceAuto = firstRoute.distance!.value;
+            trip.tempsAuto = firstRoute.duration!.value;
+            trip.distanceAuto = firstRoute.distance!.value;
+          } else {
+            trip.tempsAuto = -1;
+            trip.distanceAuto = -1;
+          }
         })
       ),
       this.mapService.getDirections({
@@ -43,10 +48,15 @@ export class GesCalculatorService {
         travelMode: TravelMode.TRANSIT
       }).pipe(
         tap(result => {
-          const firstRoute = result.routes[0]!.legs[0]!;
+          if (result.routes.length) {
+            const firstRoute = result.routes[0]!.legs[0]!;
 
-          trip.tempsTransportCommun = firstRoute.duration!.value;
-          trip.distanceTransportCommun = firstRoute.distance!.value;
+            trip.tempsTransportCommun = firstRoute.duration!.value;
+            trip.distanceTransportCommun = firstRoute.distance!.value;
+          } else {
+            trip.tempsTransportCommun = -1;
+            trip.distanceTransportCommun = -1;
+          }
         })
       ),
       this.mapService.getDirections({
@@ -55,10 +65,15 @@ export class GesCalculatorService {
         travelMode: TravelMode.BICYCLING
       }).pipe(
         tap(result => {
-          const firstRoute = result.routes[0]!.legs[0]!;
+          if (result.routes.length) {
+            const firstRoute = result.routes[0]!.legs[0]!;
 
-          trip.tempsVelo = firstRoute.duration!.value;
-          trip.distanceVelo = firstRoute.distance!.value;
+            trip.tempsVelo = firstRoute.duration!.value;
+            trip.distanceVelo = firstRoute.distance!.value;
+          } else {
+            trip.tempsVelo = -1;
+            trip.distanceVelo = -1;
+          }
         })
       ),
       this.mapService.getDirections({
@@ -67,10 +82,15 @@ export class GesCalculatorService {
         travelMode: TravelMode.WALKING
       }).pipe(
         tap(result => {
-          const firstRoute = result.routes[0]!.legs[0]!;
+          if (result.routes.length) {
+            const firstRoute = result.routes[0]!.legs[0]!;
 
-          trip.tempsMarche = firstRoute.duration!.value;
-          trip.distanceMarche = firstRoute.distance!.value;
+            trip.tempsMarche = firstRoute.duration!.value;
+            trip.distanceMarche = firstRoute.distance!.value;
+          } else {
+            trip.tempsMarche = -1;
+            trip.distanceMarche = -1;
+          }
         })
       )
     ).pipe(
