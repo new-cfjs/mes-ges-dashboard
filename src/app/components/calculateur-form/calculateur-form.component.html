@@ -17,7 +17,7 @@
         <mat-label>Adresse d'arrivée</mat-label>
         <input matInput formControlName="destinationAddressCtrl" [matAutocomplete]="destinationAddressAuto">
         <mat-icon matSuffix fontSet="material-icons-outlined">location_on</mat-icon>
-        <mat-autocomplete #destinationAddressAuto="matAutocomplete" panelWidth="auto">
+        <mat-autocomplete #destinationAddressAuto="matAutocomplete" panelWidth="auto" [displayWith]="addressDisplayFn">
           <mat-option *ngFor="let result of destinationAddressResults" [value]="result">
             {{result.name}}
           </mat-option>
