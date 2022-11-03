@@ -9,7 +9,7 @@
         <mat-icon matSuffix fontSet="material-icons-outlined">home_pin</mat-icon>
         <mat-autocomplete #originAddressAuto="matAutocomplete" panelWidth="auto" [displayWith]="addressDisplayFn">
           <mat-option *ngFor="let result of originAddressResults" [value]="result">
-            {{result.name}}
+            <span class="address" [matTooltip]="result.name">{{result.name}}</span>
           </mat-option>
         </mat-autocomplete>
         <mat-error *ngIf="!gesForm.get('originAddressCtrl')!.hasError('required') && gesForm.get('originAddressCtrl')!.hasError('missingLatLon')">
@@ -22,7 +22,7 @@
         <mat-icon matSuffix fontSet="material-icons-outlined">location_on</mat-icon>
         <mat-autocomplete #destinationAddressAuto="matAutocomplete" panelWidth="auto" [displayWith]="addressDisplayFn">
           <mat-option *ngFor="let result of destinationAddressResults" [value]="result">
-            {{result.name}}
+            <span class="address" [matTooltip]="result.name">{{result.name}}</span>
           </mat-option>
         </mat-autocomplete>
         <mat-error *ngIf="!gesForm.get('destinationAddressCtrl')!.hasError('required') && gesForm.get('destinationAddressCtrl')!.hasError('missingLatLon')">
@@ -86,7 +86,6 @@
       </div>
     </div>
     <div class="actions" fxLayout="row" fxLayoutAlign="space-around">
-      <!-- TODO Deactivate if no lat/lon -->
       <button mat-raised-button color="primary" type="submit" [disabled]="gesForm.invalid">Calculer mes GES</button>
     </div>
   </form>

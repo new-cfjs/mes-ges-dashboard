@@ -16,3 +16,10 @@ h1 {
     }
   }
 }
+
+.address {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 500px;
+  display: block;
+}

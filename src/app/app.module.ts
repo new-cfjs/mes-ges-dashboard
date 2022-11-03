@@ -23,6 +23,7 @@ import {MatListModule} from '@angular/material/list';
 import {GoogleMapsModule} from '@angular/google-maps';
 import { DurationFormatPipe } from './pipes/duration-format.pipe';
 import { DistanceFormatPipe } from './pipes/distance-format.pipe';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { DistanceFormatPipe } from './pipes/distance-format.pipe';
     MatCardModule,
     MatDividerModule,
     MatListModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
