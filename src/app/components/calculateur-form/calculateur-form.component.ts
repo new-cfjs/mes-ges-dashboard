@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {GeoCodingService} from '../../services/geo-coding.service';
-import {debounceTime, Observable, take} from 'rxjs';
+import {debounceTime, Observable, switchMap, take} from 'rxjs';
 import {Place} from '../../models/place.model';
 import {CarService} from '../../services/car.service';
-import {MatSelectChange} from '@angular/material/select';
 import {GesCalculatorService} from '../../services/ges-calculator.service';
 import {GesCalculatorQuery} from '../../models/ges-calculator-query.model';
 import {Router} from '@angular/router';
@@ -87,17 +86,19 @@ export class CalculateurFormComponent implements OnInit {
 
   public calculateGES(): void {
     const request = {
-      originAddress: JSON.stringify(this.gesForm.get('originAddressCtrl')!.value),
-      destinationAddress: JSON.stringify(this.gesForm.get('destinationAddressCtrl')!.value),
+      originAddress: this.gesForm.get('originAddressCtrl')!.value,
+      destinationAddress: this.gesForm.get('destinationAddressCtrl')!.value,
       transportationMode: this.gesForm.get('transportationModeCtrl')!.value,
-      carModel: JSON.stringify(this.gesForm.get('carFormGroup.modelCtrl')!.value),
+      carModel: this.gesForm.get('carFormGroup.modelCtrl')!.value,
       publicTransitDepartTime: this.gesForm.get('publicTransitGroup.departTimeCtrl')!.value,
       publicTransitMaximumTime: this.gesForm.get('publicTransitGroup.maximumTimeCtrl')!.value,
       publicTransitMaximumTransfers: this.gesForm.get('publicTransitGroup.maximumTransfersCtrl')!.value
     } as GesCalculatorQuery;
 
-    this.gesCalculatorService.calculateGES(request).subscribe(_ => {
-      this.router.navigate(['/results'], { queryParams: {...request} });
+    this.gesCalculatorService.calculateGES(request).pipe(
+      switchMap(trip => this.carService.saveTrip(trip))
+    ).subscribe(_ => {
+      this.router.navigate(['/results'], { queryParams: { 'request': JSON.stringify(request)} });
     });
   }
 

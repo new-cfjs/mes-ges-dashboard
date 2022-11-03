@@ -31,7 +31,7 @@ export class ResultatsGESComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.gesCalculatorQuery = params as GesCalculatorQuery;
+      this.gesCalculatorQuery = JSON.parse(params['request']) as GesCalculatorQuery;
 
       console.log(this.gesCalculatorQuery);
 
@@ -41,7 +41,7 @@ export class ResultatsGESComponent implements OnInit {
 
   private initScenarios() {
     if (!!this.gesCalculatorQuery.originAddress && !!this.gesCalculatorQuery.destinationAddress &&
-      JSON.parse(this.gesCalculatorQuery.originAddress) && JSON.parse(this.gesCalculatorQuery.destinationAddress)) {
+      this.gesCalculatorQuery.originAddress && this.gesCalculatorQuery.destinationAddress) {
       // TODO Enum
       const scenarios$ = [];
       if (this.gesCalculatorQuery.transportationMode === 'Voiture' || this.gesCalculatorQuery.transportationMode === 'Covoiturage') {
@@ -65,7 +65,7 @@ export class ResultatsGESComponent implements OnInit {
       case 'Voiture':
         // TODO Diviser par 2 pour Covoiturage ?
       case 'Covoiturage':
-        const carModel: CarModel = JSON.parse(this.gesCalculatorQuery.carModel);
+        const carModel: CarModel = this.gesCalculatorQuery.carModel;
 
         gesInGrams = Math.round(scenario.route.distanceInMeters / 1000 * carModel.co2GramsPerKm * 100) / 100;
         break;
@@ -91,8 +91,8 @@ export class ResultatsGESComponent implements OnInit {
 
   private initDrivingScenario(): Observable<Scenario> {
     return this.mapService.getDirections({
-      origin: JSON.parse(this.gesCalculatorQuery.originAddress),
-      destination: JSON.parse(this.gesCalculatorQuery.destinationAddress),
+      origin: this.gesCalculatorQuery.originAddress,
+      destination: this.gesCalculatorQuery.destinationAddress,
       travelMode: TravelMode.DRIVING
     }).pipe(
       take(1),
@@ -109,8 +109,8 @@ export class ResultatsGESComponent implements OnInit {
 
   private initTransitScenario(): Observable<Scenario> {
     return this.mapService.getDirections({
-      origin: JSON.parse(this.gesCalculatorQuery.originAddress),
-      destination: JSON.parse(this.gesCalculatorQuery.destinationAddress),
+      origin: this.gesCalculatorQuery.originAddress,
+      destination: this.gesCalculatorQuery.destinationAddress,
       travelMode: TravelMode.TRANSIT,
       transitOptions: {
         departureTime: new Date(this.gesCalculatorQuery.publicTransitDepartTime)
@@ -131,8 +131,8 @@ export class ResultatsGESComponent implements OnInit {
 
   private initBikeScenario(): Observable<Scenario> {
     return this.mapService.getDirections({
-      origin: JSON.parse(this.gesCalculatorQuery.originAddress),
-      destination: JSON.parse(this.gesCalculatorQuery.destinationAddress),
+      origin: this.gesCalculatorQuery.originAddress,
+      destination: this.gesCalculatorQuery.destinationAddress,
       travelMode: TravelMode.BICYCLING
     }).pipe(
       take(1),
@@ -149,8 +149,8 @@ export class ResultatsGESComponent implements OnInit {
 
   private initWalkingScenario(): Observable<Scenario> {
     return this.mapService.getDirections({
-      origin: JSON.parse(this.gesCalculatorQuery.originAddress),
-      destination: JSON.parse(this.gesCalculatorQuery.destinationAddress),
+      origin: this.gesCalculatorQuery.originAddress,
+      destination: this.gesCalculatorQuery.destinationAddress,
       travelMode: TravelMode.WALKING
     }).pipe(
       take(1),
