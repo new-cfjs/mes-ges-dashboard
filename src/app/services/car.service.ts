@@ -24,7 +24,7 @@ export class CarService {
     return of(Array.from({length: (2023 - 1995)}, (v, k) => k + 1995).sort((a, b) => b - a));
   }
 
-  public saveTrip(trip: Trip): Observable<boolean> {
+  public saveTrip(trip: Trip): Observable<void> {
     const formData = new FormData();
     formData.append('email', trip.email);
     formData.append('startLon', trip.startLon+'');
@@ -43,7 +43,6 @@ export class CarService {
     formData.append('distance_velo', trip.distanceVelo+'');
     formData.append('distance_marche', trip.distanceMarche+'');
 
-    // return this.httpClient.post<void>(`${this.SERVER_URL}/trip`, formData);
-    return of(true);
+    return this.httpClient.post<void>(`${this.SERVER_URL}/trip`, formData);
   }
 }
