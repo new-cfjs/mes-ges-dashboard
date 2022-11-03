@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {GesCalculatorQuery} from '../../models/ges-calculator-query.model';
 import {MapService} from '../../services/map.service';
-import {concat, map, Observable, take} from 'rxjs';
+import {concat, map, Observable, take, tap} from 'rxjs';
 import {MapRoute} from '../../models/map-route.model';
 import {Scenario} from '../../models/scenario.model';
 import {CarModel} from '../../models/car-model.model';
@@ -43,14 +43,18 @@ export class ResultatsGESComponent implements OnInit {
     if (!!this.gesCalculatorQuery.originAddress && !!this.gesCalculatorQuery.destinationAddress &&
       JSON.parse(this.gesCalculatorQuery.originAddress) && JSON.parse(this.gesCalculatorQuery.destinationAddress)) {
       // TODO Enum
+      const scenarios$ = [];
       if (this.gesCalculatorQuery.transportationMode === 'Voiture' || this.gesCalculatorQuery.transportationMode === 'Covoiturage') {
-        concat(
-          this.initDrivingScenario(),
-          this.initTransitScenario(),
-          this.initBikeScenario(),
-          this.initWalkingScenario()
-        ).subscribe(scenario => this.scenarios.push(scenario))
+        scenarios$.push(
+          this.initDrivingScenario()
+        )
       }
+      scenarios$.push(
+        this.initTransitScenario(),
+        this.initBikeScenario(),
+        this.initWalkingScenario()
+      );
+      concat(...scenarios$).subscribe(scenario => this.scenarios.push(scenario))
     }
   }
 
@@ -59,12 +63,14 @@ export class ResultatsGESComponent implements OnInit {
 
     switch (scenario.travelMode) {
       case 'Voiture':
+        // TODO Diviser par 2 pour Covoiturage ?
       case 'Covoiturage':
         const carModel: CarModel = JSON.parse(this.gesCalculatorQuery.carModel);
 
         gesInGrams = Math.round(scenario.route.distanceInMeters / 1000 * carModel.co2GramsPerKm * 100) / 100;
         break;
       case 'Transport en commun':
+        // TODO Extraire les différents types de routes et calculer le GES pour chacunes (ex: walking + transite + walking)
         // TODO Avoir une moyenne pour le transport en commun global
         gesInGrams = Math.round(scenario.route.distanceInMeters / 1000 * this.BUS_AVERAGE_CO2_GRAMS_PER_KM * 100) / 100;
         break;
@@ -84,11 +90,11 @@ export class ResultatsGESComponent implements OnInit {
   }
 
   private initDrivingScenario(): Observable<Scenario> {
-    return this.mapService.getDirections(
-      JSON.parse(this.gesCalculatorQuery.originAddress),
-      JSON.parse(this.gesCalculatorQuery.destinationAddress),
-      TravelMode.DRIVING
-    ).pipe(
+    return this.mapService.getDirections({
+      origin: JSON.parse(this.gesCalculatorQuery.originAddress),
+      destination: JSON.parse(this.gesCalculatorQuery.destinationAddress),
+      travelMode: TravelMode.DRIVING
+    }).pipe(
       take(1),
       map(result => this.mapToMapRoute(result)),
       map(route => {
@@ -102,12 +108,16 @@ export class ResultatsGESComponent implements OnInit {
   }
 
   private initTransitScenario(): Observable<Scenario> {
-    return this.mapService.getDirections(
-      JSON.parse(this.gesCalculatorQuery.originAddress),
-      JSON.parse(this.gesCalculatorQuery.destinationAddress),
-      TravelMode.TRANSIT
-    ).pipe(
+    return this.mapService.getDirections({
+      origin: JSON.parse(this.gesCalculatorQuery.originAddress),
+      destination: JSON.parse(this.gesCalculatorQuery.destinationAddress),
+      travelMode: TravelMode.TRANSIT,
+      transitOptions: {
+        departureTime: new Date(this.gesCalculatorQuery.publicTransitDepartTime)
+      }
+    }).pipe(
       take(1),
+      tap(x => console.log(x)),
       map(result => this.mapToMapRoute(result)),
       map(route => {
         return {
@@ -120,11 +130,11 @@ export class ResultatsGESComponent implements OnInit {
   }
 
   private initBikeScenario(): Observable<Scenario> {
-    return this.mapService.getDirections(
-      JSON.parse(this.gesCalculatorQuery.originAddress),
-      JSON.parse(this.gesCalculatorQuery.destinationAddress),
-      TravelMode.BICYCLING
-    ).pipe(
+    return this.mapService.getDirections({
+      origin: JSON.parse(this.gesCalculatorQuery.originAddress),
+      destination: JSON.parse(this.gesCalculatorQuery.destinationAddress),
+      travelMode: TravelMode.BICYCLING
+    }).pipe(
       take(1),
       map(result => this.mapToMapRoute(result)),
       map(route => {
@@ -138,11 +148,11 @@ export class ResultatsGESComponent implements OnInit {
   }
 
   private initWalkingScenario(): Observable<Scenario> {
-    return this.mapService.getDirections(
-      JSON.parse(this.gesCalculatorQuery.originAddress),
-      JSON.parse(this.gesCalculatorQuery.destinationAddress),
-      TravelMode.WALKING
-    ).pipe(
+    return this.mapService.getDirections({
+      origin: JSON.parse(this.gesCalculatorQuery.originAddress),
+      destination: JSON.parse(this.gesCalculatorQuery.destinationAddress),
+      travelMode: TravelMode.WALKING
+    }).pipe(
       take(1),
       map(result => this.mapToMapRoute(result)),
       map(route => {
