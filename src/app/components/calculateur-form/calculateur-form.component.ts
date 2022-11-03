@@ -99,7 +99,7 @@ export class CalculateurFormComponent implements OnInit {
       switchMap(trip => this.carService.saveTrip(trip))
     ).subscribe(_ => {
       this.router.navigate(['/results'], { queryParams: { 'request': JSON.stringify(request)} });
-    });
+    }, error => console.log(error));
   }
 
   private initCarMakes() {

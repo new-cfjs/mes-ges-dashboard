@@ -27,22 +27,22 @@ export class CarService {
   public saveTrip(trip: Trip): Observable<void> {
     const formData = new FormData();
     formData.append('email', trip.email);
-    formData.append('startLon', trip.startLon+'');
-    formData.append('startLat', trip.startLat+'');
-    formData.append('destLon', trip.destLon+'');
-    formData.append('destLat', trip.destLat+'');
-    formData.append('marque_vehicule', trip.marqueVehicule);
-    formData.append('modele_vehicule', trip.modeleVehicule);
-    formData.append('annee_vehicule', trip.anneeVehicule+'');
-    formData.append('temps_auto', trip.tempsAuto+'');
-    formData.append('temps_transport_commun', trip.tempsTransportCommun+'');
-    formData.append('temps_velo', trip.tempsVelo+'');
-    formData.append('temps_marche', trip.tempsMarche+'');
-    formData.append('distance_auto', trip.distanceAuto+'');
-    formData.append('distance_transport_commun', trip.distanceTransportCommun+'');
-    formData.append('distance_velo', trip.distanceVelo+'');
-    formData.append('distance_marche', trip.distanceMarche+'');
+    formData.append('startLongitude', trip.startLon+'');
+    formData.append('startLatitude', trip.startLat+'');
+    formData.append('destinationLongitude', trip.destLon+'');
+    formData.append('destinationLatitude', trip.destLat+'');
+    formData.append('make', trip.marqueVehicule);
+    formData.append('model', trip.modeleVehicule);
+    formData.append('year', trip.anneeVehicule+'');
+    formData.append('timeCar', trip.tempsAuto+'');
+    formData.append('timePublicTransit', trip.tempsTransportCommun+'');
+    formData.append('timeBike', trip.tempsVelo+'');
+    formData.append('timeWalking', trip.tempsMarche+'');
+    formData.append('distanceCar', trip.distanceAuto+'');
+    formData.append('distancePublicTransit', trip.distanceTransportCommun+'');
+    formData.append('distanceBike', trip.distanceVelo+'');
+    formData.append('distanceWalking', trip.distanceMarche+'');
 
-    return this.httpClient.post<void>(`${this.SERVER_URL}/trip`, formData);
+    return this.httpClient.post<void>(`${this.SERVER_URL}/trip/`, formData);
   }
 }
