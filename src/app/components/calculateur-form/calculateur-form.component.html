@@ -5,7 +5,7 @@
     <div fxLayout="row" fxLayoutGap="20px">
       <mat-form-field appearance="legacy" floatLabel="always">
         <mat-label>Adresse de départ</mat-label>
-        <input matInput formControlName="originAddressCtrl" [matAutocomplete]="originAddressAuto">
+        <input matInput formControlName="originAddressCtrl" [matAutocomplete]="originAddressAuto" required>
         <mat-icon matSuffix fontSet="material-icons-outlined">home_pin</mat-icon>
         <mat-autocomplete #originAddressAuto="matAutocomplete" panelWidth="auto" [displayWith]="addressDisplayFn">
           <mat-option *ngFor="let result of originAddressResults" [value]="result">
@@ -15,7 +15,7 @@
       </mat-form-field>
       <mat-form-field appearance="legacy" floatLabel="always">
         <mat-label>Adresse d'arrivée</mat-label>
-        <input matInput formControlName="destinationAddressCtrl" [matAutocomplete]="destinationAddressAuto">
+        <input matInput formControlName="destinationAddressCtrl" [matAutocomplete]="destinationAddressAuto" required>
         <mat-icon matSuffix fontSet="material-icons-outlined">location_on</mat-icon>
         <mat-autocomplete #destinationAddressAuto="matAutocomplete" panelWidth="auto" [displayWith]="addressDisplayFn">
           <mat-option *ngFor="let result of destinationAddressResults" [value]="result">
@@ -80,7 +80,7 @@
       </div>
     </div>
     <div class="actions" fxLayout="row" fxLayoutAlign="space-around">
-      <button mat-raised-button color="primary" type="submit">Calculer mes GES</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="gesForm.invalid">Calculer mes GES</button>
     </div>
   </form>
 
