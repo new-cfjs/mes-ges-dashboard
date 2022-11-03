@@ -8,6 +8,7 @@ import {GesCalculatorService} from '../../services/ges-calculator.service';
 import {GesCalculatorQuery} from '../../models/ges-calculator-query.model';
 import {Router} from '@angular/router';
 import {CarModel} from '../../models/car-model.model';
+import {latlonValidator} from './lat-lon-validator';
 
 @Component({
   selector: 'app-calculateur-form',
@@ -31,8 +32,8 @@ export class CalculateurFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.gesForm = this.fb.group({
-      originAddressCtrl: [''],
-      destinationAddressCtrl: [''],
+      originAddressCtrl: ['', latlonValidator],
+      destinationAddressCtrl: ['', latlonValidator],
       transportationModeCtrl: [''],
       carFormGroup: this.fb.group({
         yearCtrl: [''],

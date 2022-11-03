@@ -12,6 +12,9 @@
             {{result.name}}
           </mat-option>
         </mat-autocomplete>
+        <mat-error *ngIf="!gesForm.get('originAddressCtrl')!.hasError('required') && gesForm.get('originAddressCtrl')!.hasError('missingLatLon')">
+          Missing origin address
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="legacy" floatLabel="always">
         <mat-label>Adresse d'arrivée</mat-label>
@@ -22,6 +25,9 @@
             {{result.name}}
           </mat-option>
         </mat-autocomplete>
+        <mat-error *ngIf="!gesForm.get('destinationAddressCtrl')!.hasError('required') && gesForm.get('destinationAddressCtrl')!.hasError('missingLatLon')">
+          Missing origin address
+        </mat-error>
       </mat-form-field>
     </div>
     <div fxLayoutAlign="start">

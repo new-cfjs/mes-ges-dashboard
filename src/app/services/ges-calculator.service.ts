@@ -19,29 +19,41 @@ export class GesCalculatorService {
       startLat: request.originAddress.lat,
       destLon: request.destinationAddress.lon,
       destLat: request.destinationAddress.lat,
-      marqueVehicule: request.carModel.make,
-      modeleVehicule: request.carModel.model,
-      anneeVehicule: +request.carModel.year
+      marqueVehicule: request.carModel.make || '',
+      modeleVehicule: request.carModel.model || '',
+      anneeVehicule: +request.carModel.year || -1,
+      tempsAuto: -1,
+      distanceAuto: -1,
+      tempsTransportCommun: -1,
+      distanceTransportCommun: -1,
+      tempsVelo: -1,
+      distanceVelo: -1,
+      tempsMarche: -1,
+      distanceMarche: -1
     } as Trip;
 
-    return forkJoin(
-      this.mapService.getDirections({
-        origin: request.originAddress,
-        destination: request.destinationAddress,
-        travelMode: TravelMode.DRIVING
-      }).pipe(
-        tap(result => {
-          if (result.routes.length) {
-            const firstRoute = result.routes[0]!.legs[0]!;
+    const directionsQueries$ = [];
 
-            trip.tempsAuto = firstRoute.duration!.value;
-            trip.distanceAuto = firstRoute.distance!.value;
-          } else {
-            trip.tempsAuto = -1;
-            trip.distanceAuto = -1;
-          }
-        })
-      ),
+    if (request.carModel) {
+      directionsQueries$.push(
+        this.mapService.getDirections({
+          origin: request.originAddress,
+          destination: request.destinationAddress,
+          travelMode: TravelMode.DRIVING
+        }).pipe(
+          tap(result => {
+            if (result.routes.length) {
+              const firstRoute = result.routes[0]!.legs[0]!;
+
+              trip.tempsAuto = firstRoute.duration!.value;
+              trip.distanceAuto = firstRoute.distance!.value;
+            }
+          })
+        )
+      );
+    }
+
+    directionsQueries$.push(
       this.mapService.getDirections({
         origin: request.originAddress,
         destination: request.destinationAddress,
@@ -53,9 +65,6 @@ export class GesCalculatorService {
 
             trip.tempsTransportCommun = firstRoute.duration!.value;
             trip.distanceTransportCommun = firstRoute.distance!.value;
-          } else {
-            trip.tempsTransportCommun = -1;
-            trip.distanceTransportCommun = -1;
           }
         })
       ),
@@ -70,9 +79,6 @@ export class GesCalculatorService {
 
             trip.tempsVelo = firstRoute.duration!.value;
             trip.distanceVelo = firstRoute.distance!.value;
-          } else {
-            trip.tempsVelo = -1;
-            trip.distanceVelo = -1;
           }
         })
       ),
@@ -87,12 +93,13 @@ export class GesCalculatorService {
 
             trip.tempsMarche = firstRoute.duration!.value;
             trip.distanceMarche = firstRoute.distance!.value;
-          } else {
-            trip.tempsMarche = -1;
-            trip.distanceMarche = -1;
           }
         })
       )
+    );
+
+    return forkJoin(
+      ...directionsQueries$
     ).pipe(
       map(_ => trip)
     );
