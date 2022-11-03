@@ -15,13 +15,13 @@ import TravelMode = google.maps.TravelMode;
 })
 export class ResultatsGESComponent implements OnInit {
   private readonly NUMBER_STAT_HOLIDAYS = 11;
-  private readonly NUMBER_HOLIDAYS = 10;
+  private readonly NUMBER_HOLIDAYS = 20;
   public readonly NUMBER_WORKING_DAYS = 52 * 5 - this.NUMBER_STAT_HOLIDAYS - this.NUMBER_HOLIDAYS;
   private readonly TWICE_PER_DAY = 2;
   // https://www.bikeradar.com/features/long-reads/cycling-environmental-impact/
-  private readonly BUS_AVERAGE_CO2_GRAMS_PER_KM = 101;
+  private readonly BUS_AVERAGE_CO2_GRAMS_PER_KM = 0; //101;
   // https://www.bikeradar.com/features/long-reads/cycling-environmental-impact/
-  private readonly BIKE_AVERAGE_CO2_GRAMS_PER_KM = 21;
+  private readonly BIKE_AVERAGE_CO2_GRAMS_PER_KM = 0; //21;
 
   private gesCalculatorQuery!: GesCalculatorQuery;
   public scenarios: Scenario[] = [];

@@ -40,7 +40,7 @@
         <!-- TODO S'assurer qu'un type de voiture existe lorsque changer année, make ou model -->
         <mat-form-field appearance="legacy">
           <mat-label>Année</mat-label>
-          <mat-select formControlName="yearCtrl">
+          <mat-select formControlName="yearCtrl" (selectionChange)="loadCarModels()">
             <mat-option *ngFor="let year of carService.retrieveCarYears() | async" [value]="year">{{year}}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -80,6 +80,7 @@
       </div>
     </div>
     <div class="actions" fxLayout="row" fxLayoutAlign="space-around">
+      <!-- TODO Deactivate if no lat/lon -->
       <button mat-raised-button color="primary" type="submit" [disabled]="gesForm.invalid">Calculer mes GES</button>
     </div>
   </form>

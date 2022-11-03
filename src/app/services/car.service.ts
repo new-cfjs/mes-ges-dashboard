@@ -17,7 +17,11 @@ export class CarService {
   }
 
   public retrieveCarModels(year: string, make: string): Observable<CarModel[]> {
-    return this.httpClient.get<CarModel[]>(`${this.SERVER_URL}/model?year=${year}&make=${make}`).pipe(take(1), map(makes => makes.sort()));
+    let url = `${this.SERVER_URL}/model?make=${make}`;
+    if (year) {
+      url += `&year=${year}`;
+    }
+    return this.httpClient.get<CarModel[]>(url).pipe(take(1), map(makes => makes.sort()));
   }
 
   public retrieveCarYears(): Observable<number[]> {
