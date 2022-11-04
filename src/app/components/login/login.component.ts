@@ -15,6 +15,11 @@ export class LoginComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem('email')) {
+      console.log(`Using email ${localStorage.getItem('email')}`);
+      this.router.navigate(['calculator']);
+    }
+
     this.loginForm = this.fb.group({
       emailCtrl: ['', Validators.email],
     });
