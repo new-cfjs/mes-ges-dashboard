@@ -9,7 +9,7 @@ h1 {
 }
 
 mat-card {
-  margin-bottom: 30px;
+  margin: 0 20px 30px 20px;
 
   mat-card-content {
     h4 {
@@ -28,7 +28,13 @@ mat-card {
       em {
         font-style: normal;
         font-weight: 400;
-        min-width: 200px;
+
+        @media screen and (max-width: 599px) {
+          min-width: 150px;
+        }
+        @media screen and (min-width: 600px) {
+          min-width: 200px;
+        }
       }
     }
   }

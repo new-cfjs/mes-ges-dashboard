@@ -1,4 +1,4 @@
-<mat-toolbar routerLink="/">
+<mat-toolbar routerLink="/calculator">
   <img src="../../../assets/logo.jpg" height="50px" />
 </mat-toolbar>
 
@@ -6,8 +6,7 @@
 
 <h1>Scénarios</h1>
 
-<!-- TODO Support mobile -->
-<div fxLayout="row wrap" fxLayoutAlign="space-evenly">
+<div fxLayout.gt-xs="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-evenly">
   <mat-card fxFlex="40" *ngFor="let scenario of scenarios">
     <mat-card-header>
       <div mat-card-avatar>

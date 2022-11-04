@@ -1,4 +1,4 @@
-<mat-toolbar routerLink="/">
+<mat-toolbar routerLink="/calculator">
   <img src="../../../assets/logo.jpg" height="50px" />
 </mat-toolbar>
 
@@ -6,7 +6,7 @@
 
 <div class="page-body" fxLayout="row" fxLayoutAlign="space-around">
   <form [formGroup]="gesForm" (submit)="calculateGES()">
-    <div fxLayout="row" fxLayoutGap="20px">
+    <div fxLayout.gt-xs="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
       <mat-form-field appearance="legacy" floatLabel="always">
         <mat-label>Adresse de départ</mat-label>
         <input matInput formControlName="originAddressCtrl" [matAutocomplete]="originAddressAuto" required>
@@ -46,7 +46,7 @@
     </div>
     <div *ngIf="['Voiture', 'Covoiturage'].indexOf(gesForm.get('transportationModeCtrl')?.value) > -1" formGroupName="carFormGroup">
       <h3>Spécifications de la voiture</h3>
-      <div fxLayout="row" fxLayoutGap="20px">
+      <div fxLayout.gt-xs="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
         <!-- TODO S'assurer qu'un type de voiture existe lorsque changer année, make ou model -->
         <mat-form-field appearance="legacy">
           <mat-label>Année</mat-label>
@@ -70,7 +70,7 @@
     </div>
     <div formGroupName="publicTransitGroup">
       <h3>Exigences de transport en commun</h3>
-      <div fxLayout="row" fxLayoutGap="20px">
+      <div fxLayout.gt-xs="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
         <mat-form-field appearance="legacy" floatLabel="always">
           <mat-label>Heure départ</mat-label>
           <input matInput [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly formControlName="departTimeCtrl">

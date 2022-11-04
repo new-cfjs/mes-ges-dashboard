@@ -10,10 +10,19 @@ h1 {
 
 .page-body {
   form {
-    width: 600px;
+    margin-bottom: 15px;
 
-    .mat-form-field {
-      width: 320px;
+    @media screen and (max-width: 599px) {
+      .mat-form-field {
+        width: 280px;
+      }
+    }
+    @media screen and (min-width: 600px) {
+      width: 600px;
+
+      .mat-form-field {
+        width: 320px;
+      }
     }
 
     .actions {
