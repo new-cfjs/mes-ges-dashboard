@@ -47,7 +47,6 @@
     <div *ngIf="['Voiture', 'Covoiturage'].indexOf(gesForm.get('transportationModeCtrl')?.value) > -1" formGroupName="carFormGroup">
       <h3>Spécifications de la voiture</h3>
       <div fxLayout.gt-xs="row" fxLayout.lt-sm="column" fxLayoutGap="20px">
-        <!-- TODO S'assurer qu'un type de voiture existe lorsque changer année, make ou model -->
         <mat-form-field appearance="legacy">
           <mat-label>Année</mat-label>
           <mat-select formControlName="yearCtrl" (selectionChange)="loadCarModels()">
