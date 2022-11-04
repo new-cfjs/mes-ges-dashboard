@@ -24,6 +24,7 @@ import {GoogleMapsModule} from '@angular/google-maps';
 import { DurationFormatPipe } from './pipes/duration-format.pipe';
 import { DistanceFormatPipe } from './pipes/distance-format.pipe';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     CalculateurFormComponent,
     ResultatsGESComponent,
     DurationFormatPipe,
-    DistanceFormatPipe
+    DistanceFormatPipe,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

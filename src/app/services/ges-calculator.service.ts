@@ -14,7 +14,7 @@ export class GesCalculatorService {
 
   calculateGES(request: GesCalculatorQuery): Observable<Trip> {
     const trip = {
-      email: 'todo',
+      email: localStorage.getItem('email') || 'N/A',
       startLon: request.originAddress.lon,
       startLat: request.originAddress.lat,
       destLon: request.destinationAddress.lon,
